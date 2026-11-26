@@ -27,8 +27,7 @@ if errorlevel 1 (
     if errorlevel 1 goto failed
 )
 if /i "%~1"=="--check" exit /b 0
-echo Starting JobHelper. Keep this window open while using the app.
-"%JOBHELPER_PYTHON%" -m streamlit run app.py
+"%JOBHELPER_PYTHON%" -m streamlit run app.py --server.showEmailPrompt=false
 if errorlevel 1 goto failed
 exit /b 0
 
