@@ -9,7 +9,7 @@ from datetime import date
 from pathlib import Path
 
 
-STATUSES = ("Saved", "Applied", "Interview", "Offer", "Rejected", "Withdrawn")
+STATUSES = ("Saved", "Prepared", "Later", "Skipped", "Applied", "Interview", "Offer", "Rejected", "Withdrawn")
 COMPANY_SUFFIXES = {"corp", "gmbh", "inc", "limited", "llc", "ltd", "plc"}
 TITLE_MODIFIERS = {"junior", "jr", "senior", "sr", "remote", "hybrid"}
 SKILL_ALIASES = {
@@ -22,6 +22,9 @@ DEMO_SKILLS = "Python, SQL, dbt, PostgreSQL, Docker"
 DEMO_JOBS = (
     ("Northstar Example Labs", "Data Engineer", "Build data pipelines using Python, SQL, dbt, Airflow, and Spark.", "Applied"),
     ("Harbor Example Analytics", "Analytics Engineer", "Own dbt models and build reports with SQL and PostgreSQL. Experience with Tableau is helpful.", "Interview"),
+    ("Juniper Example Works", "Backend Engineer", "Build Python APIs with PostgreSQL and Docker.", "Prepared"),
+    ("Maple Example Studio", "Data Analyst", "Use SQL and Tableau to report product metrics.", "Saved"),
+    ("Alder Example Robotics", "Computer Vision Engineer", "Build image processing pipelines using Python and OpenCV.", "Later"),
 )
 DEMO_CHECK = ("Northstar Example Labs, Inc.", "Junior Data Engineer", DEMO_JOBS[0][2])
 
@@ -40,9 +43,9 @@ DEMO_POSTINGS = (
     DemoPosting("StepStone", *DEMO_CHECK[:2], "Berlin", DEMO_CHECK[2]),
     DemoPosting("StepStone", "Cedar Example Systems", "Machine Learning Engineer", "Munich", "Train Python models with scikit-learn and ship services using Docker."),
     DemoPosting("LinkedIn", *DEMO_JOBS[1][:2], "Hamburg", DEMO_JOBS[1][2]),
-    DemoPosting("XING", "Juniper Example Works", "Backend Engineer", "Berlin", "Build Python APIs with PostgreSQL and Docker."),
-    DemoPosting("EnglishJobs.de", "Maple Example Studio", "Data Analyst", "Remote", "Use SQL and Tableau to report product metrics."),
-    DemoPosting("Jobs Without German", "Alder Example Robotics", "Computer Vision Engineer", "Munich", "Build image processing pipelines using Python and OpenCV."),
+    DemoPosting("XING", *DEMO_JOBS[2][:2], "Berlin", DEMO_JOBS[2][2]),
+    DemoPosting("EnglishJobs.de", *DEMO_JOBS[3][:2], "Remote", DEMO_JOBS[3][2]),
+    DemoPosting("Jobs Without German", *DEMO_JOBS[4][:2], "Munich", DEMO_JOBS[4][2]),
 )
 
 

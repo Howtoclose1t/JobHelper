@@ -4,7 +4,7 @@ from pathlib import Path
 
 from streamlit.testing.v1 import AppTest
 
-from jobhelper import DEMO_CHECK, Application, Tracker, duplicate_candidates, match_skills, search_demo
+from jobhelper import DEMO_CHECK, DEMO_JOBS, Application, Tracker, duplicate_candidates, match_skills, search_demo
 
 
 class JobHelperTests(unittest.TestCase):
@@ -42,18 +42,22 @@ class JobHelperTests(unittest.TestCase):
     def test_demo_search_to_tracker(self):
         app = AppTest.from_file(str(Path(__file__).resolve().parents[1] / "app.py"), default_timeout=20).run()
         self.assertFalse(app.exception)
-        self.assertEqual(app.metric[0].value, "60%")
+        self.assertEqual(next(metric for metric in app.metric if metric.label == "Listed skills mentioned").value, "60%")
         self.assertTrue(app.warning)
         self.assertTrue(app.button(key="demo_save").disabled)
-        app.text_input[0].set_value("machine learning")
-        app.text_input[1].set_value("Munich")
+        app.button(key="source_StepStone").click().run()
+        app.text_input(key="search_keywords").set_value("machine learning")
+        app.text_input(key="search_location").set_value("Munich")
         next(button for button in app.button if button.label == "Search sample jobs").click().run()
         app.button(key="sample_0").click().run()
         self.assertEqual(app.text_input(key="demo_title").value, "Machine Learning Engineer")
+        app.checkbox(key="demo_prepare").check().run()
         app.button(key="demo_save").click().run()
         self.assertFalse(app.exception)
-        self.assertEqual(app.selectbox(key="demo_record").value, 3)
-        app.selectbox(key="demo_status_3").set_value("Applied").run()
+        new_id = len(DEMO_JOBS) + 1
+        self.assertEqual(app.selectbox(key="demo_record").value, new_id)
+        self.assertEqual(app.session_state.demo_records[0].status, "Prepared")
+        app.selectbox(key=f"demo_status_{new_id}").set_value("Applied").run()
         app.button(key="demo_update").click().run()
         self.assertFalse(app.exception)
         self.assertEqual(app.session_state.demo_records[0].status, "Applied")
